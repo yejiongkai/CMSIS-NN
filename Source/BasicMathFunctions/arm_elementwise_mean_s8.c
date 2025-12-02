@@ -42,7 +42,7 @@ arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
         {
             for (int i_ch = 0; i_ch < input_ch; i_ch++) 
             {
-                buffer_a[i_ch] = input_offset * count;
+                buffer_a[i_ch] = (int16_t)input_offset * count;
             }
         }
         else
@@ -56,10 +56,10 @@ arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
                 int loop = 0;
                 for (; loop <= input_ch - 4; loop += 4)
                 {
-                    buffer_a[loop] += input_data[loop];
-                    buffer_a[loop + 1] += input_data[loop + 1];
-                    buffer_a[loop + 2] += input_data[loop + 2];
-                    buffer_a[loop + 3] += input_data[loop + 3];
+                    buffer_a[loop] += input_data[0];
+                    buffer_a[loop + 1] += input_data[1];
+                    buffer_a[loop + 2] += input_data[2];
+                    buffer_a[loop + 3] += input_data[3];
                     input_data += 4;
                 }
                 for (; loop < input_ch; loop++)
@@ -74,10 +74,8 @@ arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
         }
         for (int i_out_c = 0; i_out_c < input_ch; i_out_c++) {
             buffer_a[i_out_c] = buffer_a[i_out_c] > 0 ? (buffer_a[i_out_c] + count / 2) / count : (buffer_a[i_out_c] - count / 2) / count;
-            buffer_a[i_out_c] = (int8_t)arm_nn_requantize((int32_t)buffer_a[i_out_c], out_mult, out_shift);
+            buffer_a[i_out_c] = (int16_t)arm_nn_requantize((int32_t)buffer_a[i_out_c], out_mult, out_shift);
             buffer_a[i_out_c] += output_offset;
-            buffer_a[i_out_c] = MAX(buffer_a[i_out_c], out_activation_min);
-            buffer_a[i_out_c] = MIN(buffer_a[i_out_c], out_activation_max);
             *(output++) = buffer_a[i_out_c];
         }
         batch_cnt--;
