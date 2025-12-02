@@ -46,7 +46,7 @@
  * Refer to header file for details.
  *
  */
-void arm_concatenation_s8_z(const int8_t *input,
+void arm_concatenation_s8_c(const int8_t *input,
                             const uint16_t input_x,
                             const uint16_t input_y,
                             const uint16_t input_z,
@@ -67,6 +67,32 @@ void arm_concatenation_s8_z(const int8_t *input,
         arm_memcpy_s8(output, input, input_copy_size);
         input += input_copy_size;
         output += output_stride;
+    }
+}
+
+
+void arm_concatenation_nhwc_s8_c(const int8_t *input,
+                                 const uint16_t input_n,
+                                 const uint16_t input_h,
+                                 const uint16_t input_w,
+                                 const uint16_t input_c,
+                                 int8_t *output,
+                                 const uint16_t output_c,
+                                 const uint32_t offset_c)
+{
+    output += offset_c;
+
+    for (uint32_t n = 0; n < input_n; n++)
+    {
+        for (uint32_t h = 0; h < input_h; h++) 
+        {
+            for (uint32_t w = 0; w < input_w; w++)
+            {
+                arm_memcpy_s8(output, input, input_c);
+                output += output_c;
+                input += input_c;
+            }
+        }
     }
 }
 

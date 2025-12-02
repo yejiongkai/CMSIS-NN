@@ -2033,6 +2033,53 @@ arm_cmsis_nn_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
                                             const int32_t block_size);
 
 /**
+ * @brief s8 elementwise mean
+ * @param[in]       ctx               pointer to context
+ * @param[in]       input_dims        pointer to input dims
+ * @param[in]       input_data        pointer to input vector
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 127
+ * @return          The function returns ARM_CMSIS_NN_SUCCESS
+ *
+ * @details   Supported framework: TensorFlow Lite micro
+ */
+arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
+                                            const cmsis_nn_dims *input_dims,
+                                            const int8_t *input_data,
+                                            int8_t *output,
+                                            const int32_t out_mult,
+                                            const int32_t out_shift,
+                                            const int32_t input_offset,
+                                            const int32_t output_offset,
+                                            const int32_t out_activation_min,
+                                            const int32_t out_activation_max);
+/**
+ * @brief s16 elementwise mean
+ * @param[in]       ctx               pointer to context
+ * @param[in]       input_dims        pointer to input dims
+ * @param[in]       input_data        pointer to input vector
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 32767
+ * @return          The function returns  ARM_CMSIS_NN_SUCCESS
+ */
+arm_cmsis_nn_status arm_elementwise_mean_s16(const cmsis_nn_context *ctx,
+                                             const cmsis_nn_dims *input_dims,
+                                             const int16_t *input_data,
+                                             int16_t *output,
+                                             const int32_t out_mult,
+                                             const int32_t out_shift,
+                                             const int32_t input_offset,
+                                             const int32_t output_offset,
+                                             const int32_t out_activation_min,
+                                             const int32_t out_activation_max);
+
+/**
  * @defgroup Acti Activation Functions
  *
  * Perform activation layers, including ReLU (Rectified Linear Unit),
@@ -2617,6 +2664,25 @@ void arm_concatenation_s8_w(const int8_t *input,
                             const uint16_t input_w,
                             int8_t *output,
                             const uint32_t offset_w);
+
+
+void arm_concatenation_nhwc_s8_c(const int8_t *input,
+                                 const uint16_t input_n,
+                                 const uint16_t input_h,
+                                 const uint16_t input_w,
+                                 const uint16_t input_c,
+                                 int8_t *output,
+                                 const uint16_t output_c,
+                                 const uint32_t offset_c);
+
+void arm_concatenation_nhwc_s16_c(const int16_t *input,
+                                 const uint16_t input_n,
+                                 const uint16_t input_h,
+                                 const uint16_t input_w,
+                                 const uint16_t input_c,
+                                 int16_t *output,
+                                 const uint16_t output_c,
+                                 const uint32_t offset_c);
 /**
  * @defgroup SVDF SVDF Functions
  *

@@ -242,11 +242,9 @@ static void depthwise_conv_s8_generic(const int8_t *input,
                                 const int32_t idx_x = base_idx_x + dilation_x * i_ker_x;
                                 int32_t idx_0 = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
                                 int32_t ker_idx_0 = (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult) + idx_out_ch;
-
                                 acc_0 += (input[idx_0] + input_offset) * kernel[ker_idx_0];
                             }
                         }
-
                         /* Requantize and clamp output to provided range */
                         acc_0 = arm_nn_requantize(acc_0, output_mult[idx_out_ch], output_shift[idx_out_ch]);
                         acc_0 += output_offset;

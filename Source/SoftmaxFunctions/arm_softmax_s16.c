@@ -67,14 +67,15 @@ arm_cmsis_nn_status arm_softmax_s16(const int16_t *input,
 
         for (col = 0; col < row_size; ++col)
         {
-            diff = input[col] - max;
+            diff = input[col] - max;  // (-∞, 0]
             const int32_t scaled_diff = arm_nn_requantize(diff, mult, shift);
-            const int32_t symmetric_scaled_diff = scaled_diff + NN_Q15_MAX;
-            const int16_t saturated_symmetric_scaled_diff = MIN(MAX(symmetric_scaled_diff, NN_Q15_MIN), NN_Q15_MAX);
-
+            const int32_t symmetric_scaled_diff = scaled_diff + NN_Q15_MAX; // (-∞, INT16_MAX]
+            const int16_t saturated_symmetric_scaled_diff = MIN(MAX(symmetric_scaled_diff, NN_Q15_MIN), NN_Q15_MAX); // [INT16_MIN, INT16_MAX]
+            
+            // Exp split 512 block, every block have 128 sep
             // Lookup from exp table and cache result for next step
-            const int16_t index = (256 + (saturated_symmetric_scaled_diff >> 7));
-            const int16_t offset = saturated_symmetric_scaled_diff & 0x7f;
+            const int16_t index = (256 + (saturated_symmetric_scaled_diff >> 7)); // >> 7 : [-256, 255] + 256 : [0, 511]
+            const int16_t offset = saturated_symmetric_scaled_diff & 0x7f; 
             const int16_t base = softmax_params->exp_lut[index];
             const int16_t slope = softmax_params->exp_lut[index + 1] - softmax_params->exp_lut[index];
             const int16_t delta = (slope * offset + 64) >> 7;
@@ -87,11 +88,11 @@ arm_cmsis_nn_status arm_softmax_s16(const int16_t *input,
         const int32_t headroom = CLZ(sum);
 
         // Compute the reciprocal 1/sum
-        const int32_t shifted_sum = (((sum) << (headroom - 1)) + (1 << 13)) >> 14;
+        const int32_t shifted_sum = (((sum) << (headroom - 1)) + (1 << 13)) >> 14;  // [65536, 131073]
 
-        // Since LUT computes 1/(1 + x), compute x = (sum - 1) => -65536
+        // Since LUT computes 1/(1 + x), compute x = (sum - 1) => -65536   sum: [1, 2] -> [0, 1] quantize -> [0, 65537]
         // Since LUT expects a symmetrical input, recenter from [UINT16_MIN, UINT16_MAX] to [INT16_MIN, INT16_MAX] =>
-        // -32768 ==> So in total -65536 -32768 => -98304
+        // -32768 ==> So in total -65536 -32768 => -98304   [0, 65536] -> [-32768, 32767]
         const int16_t symmetric_shifted_sum = shifted_sum - 98304;
 
         // Lookup from one by one table
