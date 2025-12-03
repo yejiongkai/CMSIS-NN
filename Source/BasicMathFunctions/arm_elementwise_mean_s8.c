@@ -12,8 +12,6 @@
 
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
-#include <stdio.h>
-
 
 arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
                                             const cmsis_nn_dims *input_dims,
@@ -29,7 +27,7 @@ arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
     if (ctx->buf == NULL) {
         return ARM_CMSIS_NN_ARG_ERROR;
     }
-    int16_t *buffer_a = (int16_t *)ctx->buf;
+    int32_t *buffer_a = (int32_t *)ctx->buf;
     int32_t batch_cnt = input_dims->n;
     const int32_t input_x = input_dims->w;
     const int32_t input_y = input_dims->h;
@@ -42,12 +40,12 @@ arm_cmsis_nn_status arm_elementwise_mean_s8(const cmsis_nn_context *ctx,
         {
             for (int i_ch = 0; i_ch < input_ch; i_ch++) 
             {
-                buffer_a[i_ch] = (int16_t)input_offset * count;
+                buffer_a[i_ch] = (int32_t)input_offset * count;
             }
         }
         else
         {
-            memset(buffer_a, 0, sizeof(int16_t) * input_ch);
+            memset(buffer_a, 0, sizeof(int32_t) * input_ch);
         }
         for (int i_input_y = 0; i_input_y < input_y; i_input_y++)
         {

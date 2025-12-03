@@ -204,7 +204,6 @@ arm_cmsis_nn_status arm_elementwise_add_s8(const int8_t *input_1_vect,
     while (loop_count > 0)
     {
         /* C = A + B */
-
         input_1 = (*input_1_vect++ + input_1_offset) << left_shift;
         input_2 = (*input_2_vect++ + input_2_offset) << left_shift;
 
@@ -213,6 +212,7 @@ arm_cmsis_nn_status arm_elementwise_add_s8(const int8_t *input_1_vect,
 
         sum = input_1 + input_2;
         sum = arm_nn_requantize(sum, out_mult, out_shift);
+
         sum += out_offset;
 
         sum = MAX(sum, out_activation_min);
