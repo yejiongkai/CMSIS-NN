@@ -2108,6 +2108,34 @@ void arm_relu6_s8(int8_t *data, uint16_t size);
  */
 void arm_relu_q15(int16_t *data, uint16_t size);
 
+void arm_hardswish_s8(const int8_t *data,  
+                    const int32_t input_offset,
+                    const int32_t thresh,
+                    const int32_t left_shift,
+                    int8_t *output,
+                    const int32_t out_offset,
+                    const int32_t out1_mult,
+                    const int32_t out1_shift,
+                    const int32_t out2_mult,
+                    const int32_t out2_shift,
+                    const int32_t out_activation_min,
+                    const int32_t out_activation_max,
+                    uint32_t size);
+
+void arm_hardswish_s16(const int16_t *data,  
+                    const int32_t input_offset,
+                    const int32_t thresh,
+                    const int32_t left_shift,
+                    int16_t *output,
+                    const int32_t out_offset,
+                    const int32_t out1_mult,
+                    const int32_t out1_shift,
+                    const int32_t out2_mult,
+                    const int32_t out2_shift,
+                    const int32_t out_activation_min,
+                    const int32_t out_activation_max,
+                    uint32_t size);
+
 /**
  * @brief s16 neural network activation function using direct table look-up
  * @param[in]       input       pointer to input data

@@ -24,24 +24,25 @@ processors here are Cortex-M4 or a Cortex-M33 configured with optional DSP exten
 Processors with Arm Helium Technology use the Arm M-profile Vector Extension(MVE) instructions for optimization.
 Examples are Cortex-M55 or Cortex-M85 configured with MVE.
 
-| Operator        | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 | MVE<br>int4* |
-| --------------- | ----------- | ---------- |------------|-------------| -------------|--------------|-------------| -------------|--------------|
-| Conv2D          | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
-| DepthwiseConv2D | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
-| TransposeConv2D | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
-| Fully Connected | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
-| Batch Matmul    | Yes         | Yes        | No         | Yes         | Yes          | No           | Yes         | Yes          | No           |
-| Add             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
-| Minimum         | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
-| Maximum         | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
-| Mul             | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
-| MaxPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
-| AvgPooling      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
-| Softmax         | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           | N/A          |
-| LSTM            | Yes         | Yes        | No         | Yes         | Yes          | No           | Yes         | Yes          | No           |
-| SVDF            | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
-| Pad             | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
-| Transpose       | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
+| Operator                     | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 | MVE<br>int4* |
+|------------------------------| ----------- | ---------- |------------|-------------|--------------|--------------|-------------|--------------|--------------|
+| Conv2D                       | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| DepthwiseConv2D              | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| TransposeConv2D              | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
+| Fully Connected              | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
+| Batch Matmul                 | Yes         | Yes        | No         | Yes         | Yes          | No           | Yes         | Yes          | No           |
+| Add                          | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| Minimum                      | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
+| Maximum                      | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
+| Mul                          | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| MaxPooling                   | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| AvgPooling                   | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
+| GlobalAveragePooling2D(Mean) | Yes         | Yes        | No         | No          | No           | No           | No          | No           | No           |
+| Softmax                      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           | N/A          |
+| LSTM                         | Yes         | Yes        | No         | Yes         | Yes          | No           | Yes         | Yes          | No           |
+| SVDF                         | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
+| Pad                          | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
+| Transpose                    | Yes         | No         | N/A        | No          | No           | N/A          | Yes         | No           | N/A          |
 
 * int4 weights + int8 activations
 

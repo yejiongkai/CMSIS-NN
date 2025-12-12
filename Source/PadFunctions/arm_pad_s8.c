@@ -69,12 +69,10 @@ arm_cmsis_nn_status arm_pad_s8(const int8_t *input,
     output += batch_block_size * pre_pad->n;
     for (int32_t b = 0; b < input_size->n; b++)
     {
-
         arm_memset_s8(output, pad_value, row_block_size * pre_pad->h);
         output += row_block_size * pre_pad->h;
         for (int32_t y = 0; y < input_size->h; y++)
         {
-
             arm_memset_s8(output, pad_value, col_block_size * pre_pad->w);
             output += col_block_size * pre_pad->w;
             if (input_size->c == output_size.c)

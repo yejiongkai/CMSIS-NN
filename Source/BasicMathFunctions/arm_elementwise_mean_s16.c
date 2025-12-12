@@ -68,9 +68,11 @@ arm_cmsis_nn_status arm_elementwise_mean_s16(const cmsis_nn_context *ctx,
         }
         for (int i_out_c = 0; i_out_c < input_ch; i_out_c++) {
             buffer_a[i_out_c] = buffer_a[i_out_c] > 0 ? (buffer_a[i_out_c] + count / 2) / count : (buffer_a[i_out_c] - count / 2) / count;
-            buffer_a[i_out_c] = (int16_t)arm_nn_requantize((int32_t)buffer_a[i_out_c], out_mult, out_shift);
+            buffer_a[i_out_c] = arm_nn_requantize(buffer_a[i_out_c], out_mult, out_shift);
             buffer_a[i_out_c] += output_offset;
-            *(output++) = buffer_a[i_out_c];
+            buffer_a[i_out_c] = MIN(out_activation_max, buffer_a[i_out_c]);
+            buffer_a[i_out_c] = MAX(out_activation_min, buffer_a[i_out_c]);
+            *(output++) = (int16_t)buffer_a[i_out_c];
         }
         batch_cnt--;
     }
