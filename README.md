@@ -7,6 +7,7 @@ The library follows the [int8](https://www.tensorflow.org/lite/performance/quant
 This means CMSIS-NN is bit-exact with Tensorflow Lite reference kernels. In some cases TFL and TFLM reference kernels may not be bit-exact. In that case CMSIS-NN follows TFLM reference kernels. The unit test readme provides an [overview](https://github.com/ARM-software/CMSIS-NN/blob/main/Tests/UnitTest/README.md#tests-depending-on-tflm-interpreter).
 
 ## Branches and Tags
+
 There is a single branch called 'main'.
 Tags are created during a release. Two releases are planned to be done in a year. The releases can be found
 [here](https://github.com/ARM-software/CMSIS-NN/releases) .
@@ -25,7 +26,7 @@ Processors with Arm Helium Technology use the Arm M-profile Vector Extension(MVE
 Examples are Cortex-M55 or Cortex-M85 configured with MVE.
 
 | Operator                     | C <br> int8 | C<br>int16 | C<br>int4* | DSP<br>int8 | DSP<br>int16 | DSP<br>int4* | MVE<br>int8 | MVE<br>int16 | MVE<br>int4* |
-|------------------------------| ----------- | ---------- |------------|-------------|--------------|--------------|-------------|--------------|--------------|
+| ---------------------------- | ----------- | ---------- | ---------- | ----------- | ------------ | ------------ | ----------- | ------------ | ------------ |
 | Conv2D                       | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
 | DepthwiseConv2D              | Yes         | Yes        | Yes        | Yes         | Yes          | Yes          | Yes         | Yes          | Yes          |
 | TransposeConv2D              | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
@@ -38,6 +39,7 @@ Examples are Cortex-M55 or Cortex-M85 configured with MVE.
 | MaxPooling                   | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
 | AvgPooling                   | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | Yes          | N/A          |
 | GlobalAveragePooling2D(Mean) | Yes         | Yes        | No         | No          | No           | No           | No          | No           | No           |
+| HardSwish                    | Yes         | Yes        | No         | No          | No           | No           | No          | No           |              |
 | Softmax                      | Yes         | Yes        | N/A        | Yes         | Yes          | N/A          | Yes         | No           | N/A          |
 | LSTM                         | Yes         | Yes        | No         | Yes         | Yes          | No           | Yes         | Yes          | No           |
 | SVDF                         | Yes         | No         | No         | Yes         | No           | No           | Yes         | No           | No           |
